@@ -1,0 +1,55 @@
+using System;
+using System.Threading;
+using System.Timers;
+
+
+namespace INHERITANCE
+{
+    class Program
+    {
+        static int timeOfVideo = 0;
+    
+        static void Main(string[] args)
+        {
+            char userInput;
+
+            Post post1 = new Post("test title", true, "Tomas");
+            Console.WriteLine(post1.ToString());
+            
+            ImagePost imagePost1 = new ImagePost("test image title", "Tomas","https://lol.com/img", true);
+            Console.WriteLine(imagePost1.ToString());
+
+            VideoPost videoPost1 = new VideoPost("test video title", "Tomas", "https://youtube.com/video01", true, 45);
+            Console.WriteLine(videoPost1.ToString());
+
+            Console.WriteLine("do you want to play this video?");
+            while (!char.TryParse(Console.ReadLine(),out userInput) || (userInput != 'y' && userInput != 'n'))
+            {
+                Console.WriteLine("press - y for video playback, or - n - for exit the program" );
+                if (userInput == 'n')
+                {
+                    break;
+                    
+                }
+
+
+
+            }
+            // Problem s !Console.KeyAvailable = po stisku klavesy spadne cely program, misto toho aby jen vyskocil z loopu
+            while (userInput == 'y' && timeOfVideo != videoPost1.Length || !Console.KeyAvailable)
+            {
+                Console.Write(" "+ ++timeOfVideo);
+                Thread.Sleep(100);
+                if (Console.KeyAvailable == true)
+                    break;
+            }
+
+            Console.WriteLine();
+            Console.WriteLine("press any key to continue...");
+            Console.ReadKey();
+        }
+
+
+
+    }
+}
